@@ -9,7 +9,7 @@ const { User } = require('./models/user');
 const { auth } = require('./middleware/auth');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:19SecretPassword92@ds249123.mlab.com:49123/heroku_mx2wcd8m');
+mongoose.connect(config.DATABASE);
 
 app.use(bodyParser.json());
 app.use(cookiePraser());
@@ -96,7 +96,7 @@ app.post('/api/login', (req, res) => {
     })
 })
 
-// Configuring for production
+// Configuring app for production to render HTML
 
 if(process.env.NODE_ENV === 'production') {
     const path = require('path');

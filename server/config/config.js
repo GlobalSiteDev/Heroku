@@ -5,7 +5,7 @@ const config = {
     },
     default: {
         SECRET: '19megaSECRET!password92',
-        DATABASE: 'mongodb://BohdanMohitych:BOHDANmohitych1992@ds249123.mlab.com:49123/heroku_mx2wcd8m'
+        DATABASE: 'mongodb://localhost:27017/testApp'
     }
 }
 
