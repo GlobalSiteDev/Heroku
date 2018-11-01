@@ -1,0 +1,41 @@
+.Container {
+    width: 60%;
+    padding-top: 10vh;
+    margin: 0 auto;
+}
+
+form {
+    margin: 10vh auto 0 auto;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+                0 -4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.submitButton {
+    max-width: 150px;
+    margin: 10px 0 10px 20px;
+    text-align: center;
+    color: #fff;
+    background: #333333;
+    transition: .4s;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submitButton:hover {
+    background: #c745b5;
+    border: 1px solid #c745b5;
+    color: #fff;
+    box-shadow: 0 0.7em 0.5em -0.4em #c745b5;
+    transform: translateY(-0.25em);
+}
+
+.errorMessage {
+    display: inline-block;
+    padding-left: 12%;
+    color: red;
+}

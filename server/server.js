@@ -1,57 +1,111 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookiePraser = require('cookie-parser');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
+const config = require('./config/config').get(process.env.NODE_ENV);
 const app = express();
 
+const { User } = require('./models/user');
+const { auth } = require('./middleware/auth');
+
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/auth')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:19SecretPassword92@ds249123.mlab.com:49123/heroku_mx2wcd8m');
 
-const {User} = require('./models/user');
-const {auth} = require('./middleware/auth');
 app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(cookiePraser());
 
-app.post('/api/user',(req,res)=>{
-    const user = new User({
-        email: req.body.email,
-        password: req.body.password
-    });
+app.use(express.static('client/build'));
 
-    user.save((err,doc)=>{
-        if(err) res.status(400).send(err)
-        res.status(200).send(doc)
+// GET //
+
+// Checking if a user is logged in
+
+app.get('/api/auth', auth, (req, res) => {
+    res.json({
+        isAuth: true,
+        id: req.user._id,
+        email: req.user.email,
+        name: req.user.name,
+        lastname: req.user.lastname
     })
 })
 
+/*
+* User log out. 
+* After making a request auth middlware checks if a token is correct and gives a user back.
+* Then deleting the token from the DB.
+*/
 
-app.post('/api/user/login',(req,res)=>{
+app.get('/api/logout', auth, (req, res) => {
+    req.user.deleteToken(req.token, (err, user) => {
+        if(err) return status(400).send(err);
 
-    User.findOne({'email':req.body.email},(err,user)=>{
-        if(!user) res.json({message: 'Auth failed, user not found'})
-        
-        user.comparePassword(req.body.password,(err,isMatch)=>{
-            if(err) throw err;
-            if(!isMatch) return res.status(400).json({
-                message:'Wrong password'
-            });
-            user.generateToken((err,user)=>{
+        res.sendStatus(200);
+    })
+})
+
+// POST //
+
+// Register user
+
+app.post('/api/register', (req, res) => {
+    User.findOne({'email': req.body.email}, (err, user) => {
+        if(user) return res.json({isAuth: false, message: 'Email is already taken! Log in or use another email'});
+
+        let newUser = new User(req.body);
+
+        newUser.save((err, doc) => {
+            if(err) return res.status(400).send(err);
+
+            newUser.generateToken((err, user) => {
                 if(err) return res.status(400).send(err);
-                res.cookie('auth',user.token).send('ok')
+
+                res.cookie('auth', user.token).send({
+                    isAuth: true,
+                    id: user._id,
+                    email: user.email,
+                    user: doc
+                })
             })
-        }) 
+        })
     })
-});
-
-app.get('/user/profile',auth,(req,res)=>{
-    res.status(200).send(req.token)
 })
 
+// Login user with email and password
 
-const port = process.env.PORT || 3000;
+app.post('/api/login', (req, res) => {
+    User.findOne({'email': req.body.email}, (err, user) => {
+        if(!user) return res.json({isAuth: false, message: 'Email not found! Sign up please'});
 
-app.listen(port,()=>{
-    console.log(`Started on port ${port}`);
+        user.comparePassword(req.body.password, (err, isMatch) => {
+            if(!isMatch) return res.json({
+                isAuth: false,
+                message: 'Wrong password!'
+            });
+
+            user.generateToken((err, user) => {
+                if(err) return res.status(400).send(err);
+
+                res.cookie('auth', user.token).send({
+                    isAuth: true,
+                    id: user._id,
+                    email: user.email
+                })
+            })
+        })
+    })
 })
 
+// Configuring for production
 
+if(process.env.NODE_ENV === 'production') {
+    const path = require('path');
+    app.get('/*', (req, res) => {
+        res.sendfile(path.resolve(__dirname, '../client','build', 'index.html'))
+    })
+}
+
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+    console.log(`SERVER IS RUNNING`);
+})

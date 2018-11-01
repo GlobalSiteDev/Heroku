@@ -1,0 +1,57 @@
+.Container {
+    padding-top: 10vh;
+}
+
+.Container a {
+    text-decoration: none;
+}
+
+.Content {
+    width: 60%;
+    height: 300px;
+    margin: 10vh auto 0 auto;
+    padding-top: 20px;
+    line-height: 40px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+                0 -4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.LoginLink {
+    width: 90px;
+    max-width: 150px;
+    padding: 5px;
+    text-align: center;
+    color: #fff;
+    background: #333333;
+    transition: .4s;
+    letter-spacing: 1px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.SignupLink {
+    min-width: 90px;
+    max-width: 150px;
+    padding: 5px;
+    text-align: center;
+    color: #333333;
+    background: #fff;
+    transition: .4s;
+    letter-spacing: 1px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.LoginLink:hover,
+.SignupLink:hover {
+    background: #c745b5;
+    border: 1px solid #c745b5;
+    color: #fff;
+    box-shadow: 0 0.7em 0.5em -0.4em #c745b5;
+    transform: translateY(-0.25em);
+}

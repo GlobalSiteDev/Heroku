@@ -1,0 +1,109 @@
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.Container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    background-image: linear-gradient(to top, rgba(23, 32, 61, 0.3) 0, #0a1022 95%);
+}
+
+.LeftSidebar {
+    flex-grow: 2;
+    max-width: 300px;
+    border-right: 1px solid #1a233d;
+    position: relative;
+    transition: all 0.5s;
+    box-shadow: 2px 0px 5px #03050a;
+    background-image: linear-gradient(to top, rgba(23, 32, 61, 0.3) 0, #0a1022 95%);
+}
+
+.UserProfile {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 0.5s;
+    border: #1a233d;
+    position: relative;
+    overflow: hidden;
+}
+
+.UserImage {
+    margin: 120px 0 45px 0;
+    border-color: #1a233d;
+    transition: all 0.5s;
+}
+
+.UserImage img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.5s;
+}
+
+.UserInfo {
+    color: #fffea7;
+    text-align: center;
+    line-height: 35px;
+}
+
+.LeftSidebarMinimized {
+    flex-grow: 2;
+    max-width: 100px;
+    border-right: 1px solid #1a233d;
+    position: relative;
+    transition: all 0.5s;
+    box-shadow: 2px 0px 5px #03050a;
+    background-image: linear-gradient(to top, rgba(23, 32, 61, 0.3) 0, #0a1022 95%);
+}
+
+.LeftSidebarMinimized .UserProfile {
+    border-bottom: 1px solid #1a233d;
+    max-height: 230px;
+}
+
+.LeftSidebarMinimized .UserImage {
+    margin: 115px 0;
+}
+
+.LeftSidebarMinimized .UserInfo {
+    height: 0px;
+    transition-delay: 0s;
+    animation: animate-sidebar-text 1s;
+}
+
+.ToggleButton {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    border: 1px solid #1a233d;
+    width: 20px;
+    height: 100px;
+    color: #fffea7;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 0 50% 50% 0;
+    cursor: pointer;
+    transform: translate(0, -50%);
+    box-shadow: 2px 0px 5px #03050a;
+    background: #0a1022;
+    z-index: 1;
+}
+
+.ToggleButton:hover {
+    background: #1a233d;
+}
+
+@keyframes animate-sidebar-text {
+    100% {
+      opacity: 0;
+      margin-top: -5px;
+    }
+}
