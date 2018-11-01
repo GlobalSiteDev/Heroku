@@ -12,7 +12,7 @@ export function registerUser({name, lastname, email, password}) {
 
 export function loginUser({email, password}) {
 
-    const request = axios.post('/login', {email, password})
+    const request = axios.post('api/login', {email, password})
                     .then(response => response.data)
                     
     return {
