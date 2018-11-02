@@ -14,6 +14,8 @@ export default function(ComposedClass, reload) {
         }
 
         componentWillReceiveProps(nextProps) {
+            
+            console.log(nextProps);
             this.setState({loading: false})
 
             /* 
@@ -30,7 +32,7 @@ export default function(ComposedClass, reload) {
                     this.props.history.push('/user');
                 }
             }
-        }
+    }
 
         render() {
             if(this.state.loading) {
@@ -50,4 +52,5 @@ export default function(ComposedClass, reload) {
         }
     }
     return connect(mapStateToProps)(AuthenticationCheck)
+
 }

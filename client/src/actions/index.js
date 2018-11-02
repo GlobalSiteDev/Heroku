@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function registerUser({name, lastname, email, password}) {
-    const request = axios.post('/register', {name, lastname, email, password})
+    const request = axios.post('/api/register', {name, lastname, email, password})
                     .then(response => response.data)
                     
     return {
@@ -12,7 +12,7 @@ export function registerUser({name, lastname, email, password}) {
 
 export function loginUser({email, password}) {
 
-    const request = axios.post('api/login', {email, password})
+    const request = axios.post('/api/login', {email, password})
                     .then(response => response.data)
                     
     return {
@@ -23,7 +23,7 @@ export function loginUser({email, password}) {
 
 export function auth() {
 
-    const request = axios.get('/auth')
+    const request = axios.get('/api/auth')
                     .then(response => response.data)
 
     return {
@@ -33,7 +33,7 @@ export function auth() {
 }
 
 export function logoutUser() {
-    const request = axios.get('/logout')
+    const request = axios.get('/api/logout')
                     .then(response => response.data)
     
     return {
